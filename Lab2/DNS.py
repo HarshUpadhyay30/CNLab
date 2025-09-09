@@ -1,20 +1,25 @@
-from ftplib import FTP
+import dns.resolver
 
-def ftp_ops():
+def dns_lookup():
     try:
-        ftp = FTP("ftp.dlptest.com")
-        ftp.login("dlpuser", "rNrKYTX9g7z3RgJRmxWuGHbeu")
-        ftp.retrlines("LIST")
+        d = "example.com"
 
-        with open("up.txt", "w") as f: f.write("test")
-        with open("up.txt", "rb") as f: ftp.storbinary("STOR up.txt", f)
-        print("Uploaded")
+        print("A Records:")
+        for r in dns.resolver.resolve(d, "A"):
+            print(r)
 
-        with open("down.txt", "wb") as f: ftp.retrbinary("RETR up.txt", f.write)
-        print("Downloaded")
+        print("\nMX Records:")
+        for r in dns.resolver.resolve(d, "MX"):
+            print(r)
 
-        ftp.quit()
+        print("\nCNAME Records:")
+        try:
+            for r in dns.resolver.resolve(d, "CNAME"):
+                print(r)
+        except:
+            print("No CNAME found")
+
     except Exception as e:
         print("Error:", e)
 
-ftp_ops()
+dns_lookup()
