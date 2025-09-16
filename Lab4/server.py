@@ -3,14 +3,21 @@ import socket
 import pickle
 import math
 import time
+import subprocess
 
 server_ip = "127.0.0.1"
 server_port = 9999
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-video_path = r"C:\Users\Harsh\Downloads\1MB.mp4"
-cap = cv2.VideoCapture(video_path)
+url = "https://www.youtube.com/watch?v=8cfwD8ybFfw"
+result = subprocess.run(
+    ["yt-dlp", "-f", "best[ext=mp4]", "-g", url],
+    capture_output=True,
+    text=True
+)
+direct_url = result.stdout.strip()
+cap = cv2.VideoCapture(direct_url)
 
 if not cap.isOpened():
     raise FileNotFoundError(f"Error: Could not open {video_path}")
@@ -46,6 +53,7 @@ while cap.isOpened():
 cap.release()
 sock.close()
 print("[SERVER] Streaming finished")
+
 
 
 
