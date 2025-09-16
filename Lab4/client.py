@@ -2,11 +2,9 @@ import cv2
 import socket
 import pickle
 
-# Client settings
 client_ip = "127.0.0.1"
 client_port = 9999
 
-# Create UDP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((client_ip, client_port))
 
@@ -38,5 +36,6 @@ while True:
 sock.close()
 cv2.destroyAllWindows()
 print("[CLIENT] Streaming finished")
+
 
 
