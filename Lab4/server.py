@@ -41,11 +41,12 @@ while cap.isOpened():
     frame_count += 1
     print(f"[SERVER] Video frame {frame_count} uploaded")
 
-    time.sleep(0.03) 
+    time.sleep(0.05) 
 
 cap.release()
 sock.close()
 print("[SERVER] Streaming finished")
+
 
 
 
