@@ -28,9 +28,6 @@ while cap.isOpened():
         print("[SERVER] End of video reached.")
         break
 
-    # Resize (optional: smaller frames = smaller packets)
-    frame = cv2.resize(frame, (640, 360))
-
     # Encode frame
     _, buffer = cv2.imencode(".jpg", frame)
     data = pickle.dumps(buffer)
@@ -57,4 +54,5 @@ while cap.isOpened():
 cap.release()
 sock.close()
 print("[SERVER] Streaming finished")
+
 
