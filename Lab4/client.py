@@ -16,23 +16,19 @@ print("[CLIENT] Waiting for video stream...")
 
 while True:
     try:
-        packet, _ = sock.recvfrom(65536)  # receive packet
-        marker, chunk = pickle.loads(packet)  # receive (marker, chunk)
+        packet, _ = sock.recvfrom(65536) 
+        marker, chunk = pickle.loads(packet)  
 
         buffer.append(chunk)
 
-        if marker == 1:  # last chunk of frame
-            # Reconstruct frame
+        if marker == 1: 
             data = b"".join(buffer)
             frame_data = pickle.loads(data)
             frame = cv2.imdecode(frame_data, cv2.IMREAD_COLOR)
 
-            # Display video frame
             cv2.imshow("UDP Video Stream", frame)
 
             buffer.clear()
-
-            # Stop when user presses "q"
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
 
@@ -42,4 +38,5 @@ while True:
 sock.close()
 cv2.destroyAllWindows()
 print("[CLIENT] Streaming finished")
+
 
